@@ -69,7 +69,7 @@ class ExamWidgetState extends State<ExamWidget> {
                 Text(
                     'Date: ${selectedDate.toLocal().toString().split(' ')[0]}'),
                 ElevatedButton(
-                  style: ElevatedButton.styleFrom(primary: Colors.pinkAccent), // Set button color to pink
+                  style: ElevatedButton.styleFrom(backgroundColor: Colors.pinkAccent), // Set button color to pink
                   child: const Text('Select Date'),
                   onPressed: () => _selectDate(context),
                 ),
@@ -82,7 +82,7 @@ class ExamWidgetState extends State<ExamWidget> {
                 Text(
                     'Time: ${selectedDate.toLocal().toString().split(' ')[1].substring(0, 5)}'),
                 ElevatedButton(
-                  style: ElevatedButton.styleFrom(primary: Colors.pinkAccent), // Set button color to pink
+                  style: ElevatedButton.styleFrom(backgroundColor: Colors.pinkAccent), // Set button color to pink
                   onPressed: () => _selectTime(context),
                   child: const Text('Select Time'),
                 ),
@@ -90,7 +90,7 @@ class ExamWidgetState extends State<ExamWidget> {
             ),
             const SizedBox(height: 32),
             ElevatedButton(
-              style: ElevatedButton.styleFrom(primary: Colors.pinkAccent), // Set button color to pink
+              style: ElevatedButton.styleFrom(backgroundColor: Colors.pinkAccent), // Set button color to pink
               onPressed: () {
                 Exam exam = Exam(
                   course: subjectController.text,

@@ -5,8 +5,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'exams.dart';
 import 'exams_widget.dart';
 
-
-
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
@@ -50,48 +48,60 @@ class MainPageState extends State<MainPage> {
         title: const Text('Exams'),
         actions: [
           IconButton(
-            icon: const Icon(Icons.add),
-            onPressed: () => FirebaseAuth.instance.currentUser != null
-                ? _addExamFunction(context)
-                : _navigateToSignInPage(context),
-          ),
-          IconButton(
             icon: const Icon(Icons.login),
             onPressed: _signOut,
           ),
         ],
       ),
-      body: GridView.builder(
-        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-          crossAxisCount: 2,
-          crossAxisSpacing: 8.0,
-          mainAxisSpacing: 8.0,
-        ),
-        itemCount: exams.length,
-        itemBuilder: (context, index) {
-          final course = exams[index].course;
-          final timestamp = exams[index].time;
-
-          return Card(
-            child: Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    course,
-                    style: const TextStyle(fontWeight: FontWeight.bold),
-                  ),
-                  const SizedBox(height: 8.0),
-                  Text(
-                    timestamp.toString(),
-                    style: const TextStyle(color: Colors.red),
-                  ),
-                ],
-              ),
+      body: Stack(
+        children: [
+          GridView.builder(
+            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+              crossAxisCount: 2,
+              crossAxisSpacing: 8.0,
+              mainAxisSpacing: 8.0,
             ),
-          );
-        },
+            itemCount: exams.length,
+            itemBuilder: (context, index) {
+              final course = exams[index].course;
+              final timestamp = exams[index].time;
+
+              return Card(
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        course,
+                        style: const TextStyle(fontWeight: FontWeight.bold),
+                      ),
+                      const SizedBox(height: 8.0),
+                      Text(
+                        timestamp.toString(),
+                        style: const TextStyle(color: Colors.blue),
+                      ),
+                    ],
+                  ),
+                ),
+              );
+            },
+          ),
+          Positioned(
+            bottom: 20.0,
+            left: MediaQuery.of(context).size.width / 2 - 30,
+            // Adjust position according to your requirement
+            child: FloatingActionButton(
+              onPressed: () {
+                FirebaseAuth.instance.currentUser != null
+                    ? _addExamFunction(context)
+                    : _navigateToSignInPage(context);
+              },
+              child: const Icon(Icons.add),
+              backgroundColor: Colors.blue,
+            ),
+          ),
+        ],
       ),
     );
   }
@@ -141,7 +151,7 @@ class AuthScreenState extends State<AuthScreen> {
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
   final GlobalKey<ScaffoldMessengerState> _scaffoldKey =
-  GlobalKey<ScaffoldMessengerState>();
+      GlobalKey<ScaffoldMessengerState>();
 
   Future<void> _authAction() async {
     try {
