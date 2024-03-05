@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'calendar.dart';
 import 'firebase_options.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'exams.dart';
@@ -48,6 +49,10 @@ class MainPageState extends State<MainPage> {
         title: const Text('Exams'),
         actions: [
           IconButton(
+            icon: const Icon(Icons.calendar_month),
+            onPressed: _openCalendar,
+          ),
+          IconButton(
             icon: const Icon(Icons.login),
             onPressed: _signOut,
           ),
@@ -89,7 +94,10 @@ class MainPageState extends State<MainPage> {
           ),
           Positioned(
             bottom: 20.0,
-            left: MediaQuery.of(context).size.width / 2 - 30,
+            left: MediaQuery
+                .of(context)
+                .size
+                .width / 2 - 30,
             // Adjust position according to your requirement
             child: FloatingActionButton(
               onPressed: () {
@@ -102,6 +110,15 @@ class MainPageState extends State<MainPage> {
             ),
           ),
         ],
+      ),
+    );
+  }
+
+  void _openCalendar() {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => CalendarWidget(exams: exams),
       ),
     );
   }
@@ -151,7 +168,7 @@ class AuthScreenState extends State<AuthScreen> {
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
   final GlobalKey<ScaffoldMessengerState> _scaffoldKey =
-      GlobalKey<ScaffoldMessengerState>();
+  GlobalKey<ScaffoldMessengerState>();
 
   Future<void> _authAction() async {
     try {
